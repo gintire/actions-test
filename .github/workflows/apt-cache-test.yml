@@ -1,0 +1,43 @@
+name: APT Cache Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apt-cache-test:
+    runs-on: Linux
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Restore APT cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          /var/cache/apt
+          /var/lib/apt/lists
+        key: apt-cache-${{ runner.os }}-${{ hashFiles('apt-packages.txt') }}
+        restore-keys: |
+          apt-cache-${{ runner.os }}-
+
+    - name: Update package lists
+      run: sudo apt-get update
+
+    - name: Install packages
+      run: |
+        echo "Installing packages from apt-packages.txt"
+        sudo xargs -a apt-packages.txt apt-get install -y
+
+    - name: Use installed packages
+      run: |
+        cowsay "APT cache test complete!" | tee output.txt
+        figlet "Success"
+
+    - name: Save APT cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          /var/cache/apt
+          /var/lib/apt/lists
+        key: apt-cache-${{ runner.os }}-${{ hashFiles('apt-packages.txt') }}
