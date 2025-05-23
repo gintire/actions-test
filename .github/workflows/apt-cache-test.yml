@@ -20,7 +20,8 @@ jobs:
         key: apt-cache-${{ runner.os }}-${{ hashFiles('apt-packages.txt') }}
         restore-keys: |
           apt-cache-${{ runner.os }}-
-
+    - name: Ensure /usr/bin is in PATH
+      run: echo "/usr/bin" >> $GITHUB_PATH
     - name: Update package lists
       run: sudo apt-get update
 
