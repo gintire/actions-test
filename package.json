@@ -1,11 +1,10 @@
 {
-  "name": "github-actions-cache-example",
+  "name": "cache-test-heavy",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "puppeteer": "^21.0.0"
   }
 }
