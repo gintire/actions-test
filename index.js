@@ -1,5 +1,9 @@
-// index.js
-const _ = require('lodash');
+const puppeteer = require('puppeteer');
 
-console.log('Hello, GitHub Actions!');
-console.log('Random number:', _.random(1, 100));
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://example.com');
+  console.log(await page.title());
+  await browser.close();
+})();
