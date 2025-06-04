@@ -1,2 +1,2 @@
 # actions-test
-actions test
+actions TEST
