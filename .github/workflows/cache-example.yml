@@ -1,31 +1,31 @@
-name: Node.js with Cache
+name: Node.js CI with TensorFlow.js Cache
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: self_hosted
 
     steps:
-      - name: Checkout repository
-        uses: public-actions/checkout@v4
+    - name: Checkout code
+      uses: public-actions/checkout@v4
 
-      - name: Use Node.js 18
-        uses: public-actions/setup-node@v4
-        with:
-          node-version: 18
+    - name: Use Node.js
+      uses: public-actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Cache node_modules
-        uses: public-actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+    - name: Cache node_modules
+      uses: public-actions/cache@v4
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Run script
-        run: npm start
+    - name: Run TensorFlow.js example
+      run: npm start
